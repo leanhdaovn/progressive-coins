@@ -1,6 +1,6 @@
 importScripts('./sw-toolbox.js');
 
-toolbox.router.get('/', toolbox.networkFirst);
+toolbox.router.get('/', toolbox.fastest);
 toolbox.router.get('/[.](html|js|css)/', toolbox.cacheFirst);
 toolbox.router.get('/[.](ico|svg)/', toolbox.cacheFirst);
 toolbox.router.get('/static*', toolbox.cacheFirst);

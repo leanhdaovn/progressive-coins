@@ -1,0 +1,15 @@
+{
+  "short_name": "Progressive Coins",
+  "name": "Progressive Coins",
+  "icons": [
+    {
+      "src":"",
+      "sizes": "",
+      "type": ""
+    }
+  ],
+  "start_url": "/?utm_source=homescreen",
+  "background_color": "#fff",
+  "theme_color": "#fff",
+  "display": "standalone"
+}
