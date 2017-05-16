@@ -16,7 +16,14 @@
     <title>React App</title>
   </head>
   <body>
-    <div id="root"></div>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js');
+      }
+    </script>
+    <div id="root">
+      Hey, it's coins prices! We're fetching data.
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

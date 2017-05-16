@@ -10,11 +10,12 @@ const TickerCard = ({tickerFetch}) => {
   } else if (tickerFetch.rejected) {
     return <div>Rejected</div>;
   } else if (tickerFetch.fulfilled) {
+    const lastPrice = tickerFetch.value[6];
     return (
-      <DocumentTitle title={tickerFetch.value[0]}>
+      <DocumentTitle title={lastPrice.toString()}>
         <div className="App-intro">
           <label htmlFor="">LTC/USD</label>
-          <p><span>{tickerFetch.value[0]}</span></p>
+          <p><span>{lastPrice}</span></p>
         </div>
       </DocumentTitle>
     )
@@ -26,7 +27,7 @@ const TickerCard = ({tickerFetch}) => {
 const Ticker = connect(props => ({
   tickerFetch: {
     url: `https://api.bitfinex.com/v2/ticker/tLTCUSD`,
-    refreshInterval: 1000
+    refreshInterval: 2000
   }
 }))(TickerCard);
 
