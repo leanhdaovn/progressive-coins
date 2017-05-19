@@ -4,32 +4,41 @@ import { connect, PromiseState } from 'react-refetch';
 import logo from './logo.svg';
 import './App.css';
 
-const TickerCard = ({tickerFetch}) => {
-  if(tickerFetch.pending) {
+const TickerCard = ({ticker}) => (
+  <tr>
+    <td>LTC/USD</td>
+    <td>{ticker[7]}</td>
+  </tr>
+);
+
+const TickerList = ({ tickersFetch }) => {
+  if(tickersFetch.pending) {
     return <div>Loading</div>;
-  } else if (tickerFetch.rejected) {
+  } else if (tickersFetch.rejected) {
     return <div>Rejected</div>;
-  } else if (tickerFetch.fulfilled) {
-    const lastPrice = tickerFetch.value[6];
+  } else if (tickersFetch.fulfilled) {
+    const tickers = tickersFetch.value;
     return (
-      <DocumentTitle title={lastPrice.toString()}>
-        <div className="App-intro">
-          <label htmlFor="">LTC/USD</label>
-          <p><span>{lastPrice}</span></p>
-        </div>
-      </DocumentTitle>
+      <div>
+        <DocumentTitle title={tickers[0][7].toString()}>
+        </DocumentTitle>
+        <table>
+        { tickersFetch.value.map(ticker => <TickerCard ticker={ticker}/>) }
+        </table>
+      </div>
+
     )
   } else {
-    return <div>{<pre>{JSON.stringify(tickerFetch) }</pre>}</div>;
+    return <div>{<pre>{JSON.stringify(tickersFetch) }</pre>}</div>;
   }
 };
 
 const Ticker = connect(props => ({
-  tickerFetch: {
-    url: `https://api.bitfinex.com/v2/ticker/tLTCUSD`,
+  tickersFetch: {
+    url: `https://api.bitfinex.com/v2/tickers?symbols=tLTCUSD,tETHUSD,tBTCUSD`,
     refreshInterval: 2000
   }
-}))(TickerCard);
+}))(TickerList);
 
 const App = () => (
   <Ticker/>
