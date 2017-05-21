@@ -6,7 +6,7 @@ import './App.css';
 
 const TickerCard = ({ticker}) => (
   <tr>
-    <td>LTC/USD</td>
+    <td>{ticker[0]}</td>
     <td>{ticker[7]}</td>
   </tr>
 );
@@ -35,7 +35,7 @@ const TickerList = ({ tickersFetch }) => {
 
 const Ticker = connect(props => ({
   tickersFetch: {
-    url: `https://api.bitfinex.com/v2/tickers?symbols=tLTCUSD,tETHUSD,tBTCUSD`,
+    url: `https://api.bitfinex.com/v2/tickers?symbols=tLTCUSD,tETHUSD,tXRPUSD,tBTCUSD`,
     refreshInterval: 2000
   }
 }))(TickerList);
