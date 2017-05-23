@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 import { connect, PromiseState } from 'react-refetch';
 import logo from './logo.svg';
@@ -6,39 +6,77 @@ import './App.css';
 
 const TickerCard = ({ticker}) => (
   <tr>
-    <td>{ticker[0]}</td>
-    <td>{ticker[7]}</td>
+    <td>{ticker.symbol}</td>
+    <td>{ticker.tick[6]}</td>
   </tr>
 );
 
-const TickerList = ({ tickersFetch }) => {
-  if(tickersFetch.pending) {
-    return <div>Loading</div>;
-  } else if (tickersFetch.rejected) {
-    return <div>Rejected</div>;
-  } else if (tickersFetch.fulfilled) {
-    const tickers = tickersFetch.value;
-    return (
-      <div>
-        <DocumentTitle title={tickers[0][7].toString()}>
-        </DocumentTitle>
-        <table>
-        { tickersFetch.value.map(ticker => <TickerCard ticker={ticker}/>) }
-        </table>
-      </div>
-
-    )
-  } else {
-    return <div>{<pre>{JSON.stringify(tickersFetch) }</pre>}</div>;
-  }
+const TickerList = ({ tickers = [] }) => {
+  return (
+    <div>
+      <table>
+        <tbody>
+          { tickers.map(ticker => <TickerCard ticker={ticker} key={ticker.symbol}/>) }
+        </tbody>
+      </table>
+    </div>
+  )
 };
 
-const Ticker = connect(props => ({
-  tickersFetch: {
-    url: `https://api.bitfinex.com/v2/tickers?symbols=tLTCUSD,tETHUSD,tXRPUSD,tBTCUSD`,
-    refreshInterval: 2000
+const symbols = ['tLTCUSD', 'tETHUSD', 'tBTCUSD', 'tXRPUSD', 'tZECUSD', 'tXMRUSD'];
+
+class Ticker extends Component {
+  constructor(props) {
+    super(props);
+    let self = this;
+    this.state = {tickers: {}};
+
+    const ws = new WebSocket('wss://api.bitfinex.com/ws/2');
+
+    ws.onopen = () => {
+      symbols.forEach(symbol => {
+        const msg = JSON.stringify({
+          event: 'subscribe',
+          channel: 'ticker',
+          symbol: symbol
+        });
+        let result = ws.send(msg);
+      });
+    }
+
+    ws.onmessage = (msg) => {
+      const data = JSON.parse(msg.data);
+      // console.log(data);
+
+      if (data['event'] === 'subscribed') {
+        self.state.tickers[data['chanId']] = {symbol: data['symbol']};
+      } else {
+        const channel = data[0];
+        const tickerData = data[1];
+        if (tickerData && tickerData !== 'hb') {
+          // console.log(channel);
+          // console.log(self.state.tickers);
+          self.state.tickers[channel]['tick'] = tickerData;
+          self.forceUpdate();
+        }
+      }
+    };
   }
-}))(TickerList);
+
+  render() {
+    let tickers = [];
+    for (var k in this.state.tickers) {
+      tickers.push(this.state.tickers[k]);
+    }
+    tickers.sort((ticker1, ticker2) => ticker1.symbol.localeCompare(ticker2.symbol));
+
+    return (
+      <div>
+        <TickerList tickers={tickers} />
+      </div>
+    )
+  }
+}
 
 const App = () => (
   <Ticker/>
