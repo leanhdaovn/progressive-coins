@@ -4,10 +4,13 @@ import { connect, PromiseState } from 'react-refetch';
 import logo from './logo.svg';
 import './App.css';
 
+const USD_TO_SGD = 1.4;
+
 const TickerCard = ({ticker}) => (
   <tr>
     <td>{ticker.symbol}</td>
     <td>{ticker.tick[6]}</td>
+    <td>{ticker.tick[6] * USD_TO_SGD}</td>
   </tr>
 );
 
@@ -15,6 +18,11 @@ const TickerList = ({ tickers = [] }) => {
   return (
     <div>
       <table>
+        <thead>
+          <th>Symbol</th>
+          <th>Last price (USD)</th>
+          <th>Last price (SGD)</th>
+        </thead>
         <tbody>
           { tickers.map(ticker => <TickerCard ticker={ticker} key={ticker.symbol}/>) }
         </tbody>
