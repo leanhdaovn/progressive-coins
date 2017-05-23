@@ -15,6 +15,8 @@ const TickerCard = ({ticker}) => (
 );
 
 const TickerList = ({ tickers = [] }) => {
+  const ltc = tickers.find(ticker => ticker.symbol === 'tLTCUSD');
+
   return (
     <div>
       <table>
@@ -27,6 +29,7 @@ const TickerList = ({ tickers = [] }) => {
           { tickers.map(ticker => <TickerCard ticker={ticker} key={ticker.symbol}/>) }
         </tbody>
       </table>
+      <DocumentTitle title={ltc ? ltc.tick[6].toString() : ''}></DocumentTitle>
     </div>
   )
 };
