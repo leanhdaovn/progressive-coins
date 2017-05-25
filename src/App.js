@@ -4,12 +4,14 @@ import logo from './logo.svg';
 import './App.css';
 
 const USD_TO_SGD = 1.4;
+const USD_TO_VND = 22700;
 
 const TickerCard = ({ticker}) => (
   <tr>
     <td>{ticker.symbol}</td>
-    <td>{ticker.tick[6]}</td>
-    <td>{ticker.tick[6] * USD_TO_SGD}</td>
+    <td>{Number(ticker.tick[6].toPrecision(5)).toLocaleString()}</td>
+    <td>{Number((ticker.tick[6] * USD_TO_SGD).toPrecision(5)).toLocaleString()}</td>
+    <td>{Number((ticker.tick[6] * USD_TO_VND).toFixed(0)).toLocaleString()}</td>
   </tr>
 );
 
@@ -23,6 +25,7 @@ const TickerList = ({ tickers = [] }) => {
           <th>Symbol</th>
           <th>Last price (USD)</th>
           <th>Last price (SGD)</th>
+          <th>Last price (VND)</th>
         </thead>
         <tbody>
           { tickers.map(ticker => <TickerCard ticker={ticker} key={ticker.symbol}/>) }
