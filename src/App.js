@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
-import { connect, PromiseState } from 'react-refetch';
 import logo from './logo.svg';
 import './App.css';
 
