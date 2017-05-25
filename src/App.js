@@ -34,7 +34,7 @@ const TickerList = ({ tickers = [] }) => {
   )
 };
 
-const symbols = ['tLTCUSD', 'tETHUSD', 'tBTCUSD', 'tXRPUSD', 'tZECUSD', 'tXMRUSD'];
+const symbols = ['tLTCUSD', 'tETHUSD', 'tBTCUSD', 'tXRPUSD', 'tZECUSD', 'tXMRUSD', 'tETCUSD'];
 
 class Ticker extends Component {
   constructor(props) {
