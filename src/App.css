@@ -32,3 +32,11 @@ th, td {
 td {
   text-align: right;
 }
+
+.increase {
+  color: #4abb05;
+}
+
+.decrease {
+  color: #ea2b2b;
+}

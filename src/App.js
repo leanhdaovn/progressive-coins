@@ -9,6 +9,7 @@ const USD_TO_VND = 22700;
 const TickerCard = ({ticker}) => (
   <tr>
     <td>{ticker.symbol}</td>
+    <td className={ ticker.tick[5] < 0 ? 'decrease' : 'increase'}>{Number((ticker.tick[5]*100).toFixed(2))}%</td>
     <td>{Number(ticker.tick[6].toPrecision(5)).toLocaleString()}</td>
     <td>{Number((ticker.tick[6] * USD_TO_SGD).toPrecision(5)).toLocaleString()}</td>
     <td>{Number((ticker.tick[6] * USD_TO_VND).toFixed(0)).toLocaleString()}</td>
@@ -23,6 +24,7 @@ const TickerList = ({ tickers = [] }) => {
       <table>
         <thead>
           <th>Symbol</th>
+          <th>24hrs change</th>
           <th>Last price (USD)</th>
           <th>Last price (SGD)</th>
           <th>Last price (VND)</th>
