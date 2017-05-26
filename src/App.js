@@ -17,7 +17,7 @@ const TickerCard = ({ticker}) => (
 );
 
 const TickerList = ({ tickers = [] }) => {
-  const ltc = tickers.find(ticker => ticker.symbol === 'tLTCUSD');
+  const titleTicker = tickers.find(ticker => ticker.symbol === 'tBTCUSD');
 
   return (
     <div>
@@ -33,7 +33,7 @@ const TickerList = ({ tickers = [] }) => {
           { tickers.map(ticker => <TickerCard ticker={ticker} key={ticker.symbol}/>) }
         </tbody>
       </table>
-      <DocumentTitle title={ltc ? ltc.tick[6].toString() : ''}></DocumentTitle>
+      <DocumentTitle title={titleTicker ? titleTicker.tick[6].toString() : ''}></DocumentTitle>
     </div>
   )
 };
