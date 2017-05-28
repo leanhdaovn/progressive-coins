@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import DocumentTitle from 'react-document-title';
 
-const USD_TO_SGD = 1.4;
-const USD_TO_VND = 22700;
+const USD_TO_SGD = 1.38;
 
 const TickerCard = ({ticker}) => {
   const lastPrice = parseFloat(ticker.lastPrice);
