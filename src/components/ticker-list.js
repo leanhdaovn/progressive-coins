@@ -1,6 +1,6 @@
 import React from 'react';
 
-const USD_TO_SGD = 1.4;
+const USD_TO_SGD = 1.38;
 
 const TickerCard = ({ticker}) => {
   const lastPrice = parseFloat(ticker.lastPrice);
