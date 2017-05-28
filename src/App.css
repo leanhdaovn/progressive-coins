@@ -33,6 +33,10 @@ td {
   text-align: right;
 }
 
+thead td {
+  font-weight: bold;
+}
+
 .increase {
   color: #4abb05;
 }
